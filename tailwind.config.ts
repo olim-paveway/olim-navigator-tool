@@ -9,8 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        olive: {
+          DEFAULT: "#5C6B3A",
+          light: "#8A9B5C",
+          dark: "#3D4826",
+        },
+        gold: {
+          DEFAULT: "#B8962E",
+          light: "#D4AF60",
+        },
+        cream: "#F8F4E8",
       },
     },
   },
