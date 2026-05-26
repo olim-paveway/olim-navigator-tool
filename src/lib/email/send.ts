@@ -1,7 +1,5 @@
 import { MailerSend, EmailParams, Sender, Recipient, Attachment } from "mailersend";
-import { renderToStaticMarkup } from "react-dom/server";
-import { createElement } from "react";
-import { DeliveryEmail } from "./templates/delivery";
+import { buildDeliveryEmailHtml } from "./templates/delivery";
 
 const mailerSend = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY!,
@@ -24,9 +22,7 @@ export async function sendPlanEmail({
   pdfUrl,
   pdfBuffer,
 }: SendPlanEmailArgs): Promise<void> {
-  const html = renderToStaticMarkup(
-    createElement(DeliveryEmail, { firstName, readinessScore, targetArea, pdfUrl })
-  );
+  const html = buildDeliveryEmailHtml({ firstName, readinessScore, targetArea, pdfUrl });
 
   const fromEmail = process.env.MAILERSEND_FROM_EMAIL ?? "navigator@olimpaveway.com";
   const fromName = process.env.MAILERSEND_FROM_NAME ?? "Olim Paveway";
