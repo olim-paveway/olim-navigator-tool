@@ -1,9 +1,11 @@
-import { Resend } from "resend";
+import { MailerSend, EmailParams, Sender, Recipient, Attachment } from "mailersend";
 import { renderToStaticMarkup } from "react-dom/server";
 import { createElement } from "react";
 import { DeliveryEmail } from "./templates/delivery";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const mailerSend = new MailerSend({
+  apiKey: process.env.MAILERSEND_API_KEY!,
+});
 
 type SendPlanEmailArgs = {
   to: string;
@@ -26,16 +28,21 @@ export async function sendPlanEmail({
     createElement(DeliveryEmail, { firstName, readinessScore, targetArea, pdfUrl })
   );
 
-  await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL ?? "navigator@olimpaveway.com",
-    to,
-    subject: `${firstName}, your personal aliyah plan is ready`,
-    html,
-    attachments: [
-      {
-        filename: "Your-Aliyah-Plan-Olim-Paveway.pdf",
-        content: pdfBuffer,
-      },
-    ],
-  });
+  const fromEmail = process.env.MAILERSEND_FROM_EMAIL ?? "navigator@olimpaveway.com";
+  const fromName = process.env.MAILERSEND_FROM_NAME ?? "Olim Paveway";
+
+  const emailParams = new EmailParams()
+    .setFrom(new Sender(fromEmail, fromName))
+    .setTo([new Recipient(to, firstName)])
+    .setSubject(`${firstName}, your personal aliyah plan is ready`)
+    .setHtml(html)
+    .setAttachments([
+      new Attachment(
+        pdfBuffer.toString("base64"),
+        "Your-Aliyah-Plan-Olim-Paveway.pdf",
+        "attachment"
+      ),
+    ]);
+
+  await mailerSend.email.send(emailParams);
 }
