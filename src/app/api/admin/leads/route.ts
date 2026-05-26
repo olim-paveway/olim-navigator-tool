@@ -5,16 +5,8 @@ import { desc, eq, and, gte, lte, type SQL } from "drizzle-orm";
 
 export const runtime = "nodejs";
 
-function isAuthorized(req: NextRequest): boolean {
-  const apiKey = req.headers.get("x-api-key");
-  return apiKey === process.env.ADMIN_API_KEY;
-}
-
+// Auth is handled upstream by middleware (Basic Auth on /api/admin/*)
 export async function GET(req: NextRequest) {
-  if (!isAuthorized(req)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
   const { searchParams } = new URL(req.url);
   const page = Math.max(1, parseInt(searchParams.get("page") ?? "1"));
   const limit = Math.min(100, parseInt(searchParams.get("limit") ?? "50"));

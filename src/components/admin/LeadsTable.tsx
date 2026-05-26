@@ -37,9 +37,8 @@ export function LeadsTable() {
     if (filterCountry) params.set("country", filterCountry);
     if (filterStatus) params.set("status", filterStatus);
 
-    const res = await fetch(`/api/admin/leads?${params}`, {
-      headers: { "x-api-key": process.env.NEXT_PUBLIC_ADMIN_API_KEY ?? "" },
-    });
+    // Auth is handled by middleware (Basic Auth) — no client-side key needed
+    const res = await fetch(`/api/admin/leads?${params}`);
     const data = await res.json();
     setLeads(data.leads ?? []);
     setLoading(false);
