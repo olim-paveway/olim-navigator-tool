@@ -10,11 +10,11 @@ export default function HomePage() {
           src="/images/background.png"
           alt=""
           fill
-          className="object-cover object-center"
+          className="object-cover object-top"
           priority
         />
-        {/* Dark blue + purple overlay for contrast */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0c1f35]/88 via-[#2596be]/20 to-[#1a0d30]/82" />
+        {/* Dark blue overlay for contrast */}
+        <div className="absolute inset-0 bg-[#0d1e30]/80" />
       </div>
 
       {/* Header */}
@@ -24,8 +24,8 @@ export default function HomePage() {
             <Image
               src="/images/paveway-logo-pink-text-updated.png"
               alt="Olim Paveway"
-              width={157}
-              height={44}
+              width={240}
+              height={67}
               priority
             />
           </a>
