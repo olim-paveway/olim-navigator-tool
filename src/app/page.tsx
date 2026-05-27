@@ -22,7 +22,7 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <a href="https://www.olimpaveway.com" aria-label="Olim Paveway home">
             <Image
-              src="/images/paveway-logo-pink-text-updated.png"
+              src="/images/paveway-logo-transparent.png"
               alt="Olim Paveway"
               width={240}
               height={67}
