@@ -24,8 +24,8 @@ export function buildDeliveryEmailHtml({
 
           <!-- Header -->
           <tr>
-            <td style="background-color:#5C6B3A;padding:32px 40px;">
-              <p style="margin:0;font-size:12px;color:#B8962E;letter-spacing:2px;font-family:Arial,sans-serif;">OLIM PAVEWAY</p>
+            <td style="background-color:#2596be;padding:32px 40px;">
+              <p style="margin:0;font-size:12px;color:#d4eaf5;letter-spacing:2px;font-family:Arial,sans-serif;">OLIM PAVEWAY</p>
               <h1 style="margin:8px 0 0;font-size:24px;color:#ffffff;font-weight:bold;">Your Aliyah Plan is Ready</h1>
             </td>
           </tr>
@@ -35,7 +35,7 @@ export function buildDeliveryEmailHtml({
             <td style="padding:32px 40px 0;">
               <table cellpadding="0" cellspacing="0">
                 <tr>
-                  <td style="background-color:#B8962E;border-radius:8px;padding:20px 32px;text-align:center;vertical-align:middle;">
+                  <td style="background-color:#1a78a0;border-radius:8px;padding:20px 32px;text-align:center;vertical-align:middle;">
                     <p style="margin:0;font-size:48px;font-weight:bold;color:#ffffff;line-height:1;">${readinessScore}</p>
                     <p style="margin:4px 0 0;font-size:10px;color:#ffffff;letter-spacing:1px;font-family:Arial,sans-serif;">READINESS SCORE</p>
                   </td>
@@ -63,7 +63,7 @@ export function buildDeliveryEmailHtml({
               </ul>
               <p style="font-size:14px;color:#1A1A1A;line-height:1.6;margin:0;">
                 The PDF is attached below. You can also
-                <a href="${pdfUrl}" style="color:#5C6B3A;">view it online</a>.
+                <a href="${pdfUrl}" style="color:#2596be;">view it online</a>.
               </p>
             </td>
           </tr>
@@ -72,7 +72,7 @@ export function buildDeliveryEmailHtml({
           <tr>
             <td style="padding:0 40px 32px;">
               <a href="https://www.olimpaveway.com/consultation"
-                 style="display:inline-block;background-color:#5C6B3A;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold;font-family:Arial,sans-serif;">
+                 style="display:inline-block;background-color:#2596be;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold;font-family:Arial,sans-serif;">
                 Book Your Free Consultation
               </a>
             </td>

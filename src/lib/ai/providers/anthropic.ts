@@ -10,18 +10,27 @@ export async function generateWithAnthropic(
 ): Promise<AiPlanSchema> {
   const response = await client.messages.create({
     model: "claude-sonnet-4-5",
-    max_tokens: 2048,
+    max_tokens: 4096,
     system: buildSystemPrompt(),
     messages: [{ role: "user", content: buildUserPrompt(data) }],
     tools: [
       {
         name: "generate_aliyah_plan",
-        description: "Generate a structured aliyah action plan",
+        description: "Generate a structured personalised aliyah action plan",
         input_schema: {
           type: "object" as const,
           properties: {
-            readiness_score: { type: "number" },
+            readiness_score: { type: "number", description: "0–100 readiness score" },
+            intent_score: { type: "number", description: "0–100 intent score" },
+            intent_band: {
+              type: "string",
+              enum: ["Exploring", "Warming Up", "Committed", "Ready to Launch"],
+            },
+            personal_snapshot: { type: "string" },
+            profile_meaning: { type: "string" },
             assessment: { type: "string" },
+            country_notes: { type: "string" },
+            location_notes: { type: "string" },
             action_items: {
               type: "array",
               items: {
@@ -57,13 +66,28 @@ export async function generateWithAnthropic(
                 required: ["doc", "country_specific"],
               },
             },
+            consultation_questions: {
+              type: "array",
+              items: { type: "string" },
+            },
+            next_step: { type: "string" },
+            disclaimer: { type: "string" },
           },
           required: [
             "readiness_score",
+            "intent_score",
+            "intent_band",
+            "personal_snapshot",
+            "profile_meaning",
             "assessment",
+            "country_notes",
+            "location_notes",
             "action_items",
             "timeline_phases",
             "document_checklist",
+            "consultation_questions",
+            "next_step",
+            "disclaimer",
           ],
         },
       },

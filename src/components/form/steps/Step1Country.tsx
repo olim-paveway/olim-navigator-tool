@@ -28,7 +28,7 @@ export function Step1Country({ data, onUpdate, onNext }: Props) {
       <p className="text-gray-500 mb-6">
         {"We'll tailor your plan to your country's specific requirements."}
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {OPTIONS.map((opt) => (
           <OptionCard
             key={opt.value}

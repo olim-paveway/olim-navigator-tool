@@ -28,7 +28,7 @@ export function Step2Area({ data, onUpdate, onNext }: Props) {
       <p className="text-gray-500 mb-6">
         Your target area affects housing, schools, and community resources.
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         {OPTIONS.map((opt) => (
           <OptionCard
             key={opt.value}

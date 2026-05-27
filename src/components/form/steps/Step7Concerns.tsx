@@ -38,7 +38,7 @@ export function Step7Concerns({ data, onUpdate, onNext }: Props) {
       <p className="text-gray-500 mb-6">
         Select all that apply — your plan will address each one.
       </p>
-      <div className="grid grid-cols-2 gap-3 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
         {OPTIONS.map((opt) => (
           <OptionCard
             key={opt.value}

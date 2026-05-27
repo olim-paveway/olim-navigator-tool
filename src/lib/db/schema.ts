@@ -10,7 +10,13 @@ import {
 
 export type AiPlan = {
   readiness_score: number;
+  intent_score: number;
+  intent_band: "Exploring" | "Warming Up" | "Committed" | "Ready to Launch";
+  personal_snapshot: string;
+  profile_meaning: string;
   assessment: string;
+  country_notes: string;
+  location_notes: string;
   action_items: Array<{
     title: string;
     description: string;
@@ -25,6 +31,9 @@ export type AiPlan = {
     doc: string;
     country_specific: boolean;
   }>;
+  consultation_questions: string[];
+  next_step: string;
+  disclaimer: string;
 };
 
 export const leadStatusEnum = pgEnum("lead_status", [

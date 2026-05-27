@@ -19,12 +19,21 @@ export async function generateWithOpenAI(
         type: "function",
         function: {
           name: "generate_aliyah_plan",
-          description: "Generate a structured aliyah action plan",
+          description: "Generate a structured personalised aliyah action plan",
           parameters: {
             type: "object",
             properties: {
-              readiness_score: { type: "number" },
+              readiness_score: { type: "number", description: "0–100 readiness score" },
+              intent_score: { type: "number", description: "0–100 intent score" },
+              intent_band: {
+                type: "string",
+                enum: ["Exploring", "Warming Up", "Committed", "Ready to Launch"],
+              },
+              personal_snapshot: { type: "string" },
+              profile_meaning: { type: "string" },
               assessment: { type: "string" },
+              country_notes: { type: "string" },
+              location_notes: { type: "string" },
               action_items: {
                 type: "array",
                 items: {
@@ -60,13 +69,28 @@ export async function generateWithOpenAI(
                   required: ["doc", "country_specific"],
                 },
               },
+              consultation_questions: {
+                type: "array",
+                items: { type: "string" },
+              },
+              next_step: { type: "string" },
+              disclaimer: { type: "string" },
             },
             required: [
               "readiness_score",
+              "intent_score",
+              "intent_band",
+              "personal_snapshot",
+              "profile_meaning",
               "assessment",
+              "country_notes",
+              "location_notes",
               "action_items",
               "timeline_phases",
               "document_checklist",
+              "consultation_questions",
+              "next_step",
+              "disclaimer",
             ],
           },
         },

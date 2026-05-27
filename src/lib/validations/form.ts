@@ -78,7 +78,13 @@ export type FormSchema = z.infer<typeof formSchema>;
 
 export const aiPlanSchema = z.object({
   readiness_score: z.number().min(0).max(100),
+  intent_score: z.number().min(0).max(100),
+  intent_band: z.enum(["Exploring", "Warming Up", "Committed", "Ready to Launch"]),
+  personal_snapshot: z.string(),
+  profile_meaning: z.string(),
   assessment: z.string(),
+  country_notes: z.string(),
+  location_notes: z.string(),
   action_items: z
     .array(
       z.object({
@@ -101,6 +107,9 @@ export const aiPlanSchema = z.object({
       country_specific: z.boolean(),
     })
   ),
+  consultation_questions: z.array(z.string()).length(3),
+  next_step: z.string(),
+  disclaimer: z.string(),
 });
 
 export type AiPlanSchema = z.infer<typeof aiPlanSchema>;
