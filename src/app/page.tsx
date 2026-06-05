@@ -14,7 +14,7 @@ export default function HomePage() {
           priority
         />
         {/* Dark blue overlay for contrast */}
-        <div className="absolute inset-0 bg-[#0d1e30]/80" />
+        <div className="absolute inset-0 bg-[#1a1640]/80" />
       </div>
 
       {/* Header */}

@@ -1,20 +1,24 @@
 import React from "react";
+import path from "path";
 import {
   Document,
   Page,
   Text,
   View,
+  Image,
   StyleSheet,
   pdf,
 } from "@react-pdf/renderer";
 import type { AiPlanSchema } from "@/lib/validations/form";
 import type { FormSchema } from "@/lib/validations/form";
 
+const LOGO_PATH = path.join(process.cwd(), "public/images/paveway-logo-transparent.png");
+
 const C = {
-  blue: "#2596be",
-  blueLight: "#5ab0cf",
-  blueDark: "#1a78a0",
-  blueBg: "#EBF7FC",
+  purple: "#352f6e",
+  purpleLight: "#6b63a8",
+  purpleDark: "#221c52",
+  purpleBg: "#EEEDF8",
   gold: "#B8962E",
   cream: "#F8F4E8",
   darkText: "#1A1A1A",
@@ -28,14 +32,14 @@ const C = {
 
 const styles = StyleSheet.create({
   // Pages
-  coverPage: { backgroundColor: C.blueDark, padding: 48, minHeight: "100%" },
+  coverPage: { backgroundColor: C.purpleDark, padding: 48, minHeight: "100%" },
   bodyPage: { backgroundColor: C.white, padding: 44 },
-  ctaPage: { backgroundColor: C.blueBg, padding: 44 },
+  ctaPage: { backgroundColor: C.purpleBg, padding: 44 },
 
   // Cover
-  coverBrand: { fontSize: 10, color: C.blueLight, letterSpacing: 2, marginBottom: 6 },
+  coverLogo: { width: 160, height: 45, marginBottom: 20 },
   coverTitle: { fontSize: 26, fontWeight: "bold", color: C.white, marginBottom: 6 },
-  coverSubtitle: { fontSize: 12, color: C.blueLight, marginBottom: 36 },
+  coverSubtitle: { fontSize: 12, color: C.purpleLight, marginBottom: 36 },
   coverBandBadge: {
     alignSelf: "flex-start",
     backgroundColor: C.gold,
@@ -47,7 +51,7 @@ const styles = StyleSheet.create({
   coverBandText: { fontSize: 9, color: C.white, fontWeight: "bold", letterSpacing: 1 },
   scoreRow: { flexDirection: "row", alignItems: "flex-start", marginBottom: 24 },
   scoreBox: {
-    backgroundColor: C.blue,
+    backgroundColor: C.purple,
     borderRadius: 8,
     padding: 20,
     width: 130,
@@ -58,39 +62,39 @@ const styles = StyleSheet.create({
   scoreLabel: { fontSize: 8, color: C.white, letterSpacing: 1, marginTop: 4 },
   intentBox: {
     flex: 1,
-    backgroundColor: C.blueDark,
+    backgroundColor: C.purpleDark,
     borderWidth: 1,
-    borderColor: C.blue,
+    borderColor: C.purple,
     borderRadius: 8,
     padding: 16,
   },
-  intentLabel: { fontSize: 8, color: C.blueLight, letterSpacing: 1, marginBottom: 4 },
+  intentLabel: { fontSize: 8, color: C.purpleLight, letterSpacing: 1, marginBottom: 4 },
   intentNumber: { fontSize: 32, fontWeight: "bold", color: C.white },
   intentBand: { fontSize: 10, color: C.gold, marginTop: 4 },
-  coverSnapshotTitle: { fontSize: 9, color: C.blueLight, letterSpacing: 1, marginBottom: 4 },
+  coverSnapshotTitle: { fontSize: 9, color: C.purpleLight, letterSpacing: 1, marginBottom: 4 },
   coverSnapshot: { fontSize: 10, color: C.white, lineHeight: 1.6 },
-  coverMeta: { fontSize: 9, color: C.blueLight, marginTop: 20, marginBottom: 2 },
+  coverMeta: { fontSize: 9, color: C.purpleLight, marginTop: 20, marginBottom: 2 },
   coverFooter: { position: "absolute", bottom: 36, left: 48, right: 48 },
-  coverFooterText: { fontSize: 8, color: C.blueLight, opacity: 0.7 },
+  coverFooterText: { fontSize: 8, color: C.purpleLight, opacity: 0.7 },
 
   // Body sections
   sectionTitle: {
     fontSize: 14,
     fontWeight: "bold",
-    color: C.blue,
+    color: C.purple,
     marginBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: C.blue,
+    borderBottomColor: C.purple,
     paddingBottom: 5,
     marginTop: 18,
   },
   sectionTitleFirst: {
     fontSize: 14,
     fontWeight: "bold",
-    color: C.blue,
+    color: C.purple,
     marginBottom: 10,
     borderBottomWidth: 2,
-    borderBottomColor: C.blue,
+    borderBottomColor: C.purple,
     paddingBottom: 5,
     marginTop: 0,
   },
@@ -101,14 +105,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   infoBox: {
-    backgroundColor: C.blueBg,
+    backgroundColor: C.purpleBg,
     borderLeftWidth: 3,
-    borderLeftColor: C.blue,
+    borderLeftColor: C.purple,
     borderRadius: 4,
     padding: 12,
     marginBottom: 12,
   },
-  infoBoxLabel: { fontSize: 8, color: C.blue, letterSpacing: 1, marginBottom: 4 },
+  infoBoxLabel: { fontSize: 8, color: C.purple, letterSpacing: 1, marginBottom: 4 },
   infoBoxText: { fontSize: 10, color: C.darkText, lineHeight: 1.6 },
 
   // Action items
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
 
   // Timeline
   timelinePhase: { marginBottom: 14 },
-  phaseName: { fontSize: 11, fontWeight: "bold", color: C.blue },
+  phaseName: { fontSize: 11, fontWeight: "bold", color: C.purple },
   phaseDuration: { fontSize: 9, color: C.gold, marginBottom: 3 },
   phaseTask: { fontSize: 9, color: C.darkText, marginBottom: 2, paddingLeft: 10 },
 
@@ -142,7 +146,7 @@ const styles = StyleSheet.create({
     width: 9,
     height: 9,
     borderWidth: 1,
-    borderColor: C.blue,
+    borderColor: C.purple,
     borderRadius: 2,
     marginRight: 7,
     marginTop: 1,
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
     width: 18,
     height: 18,
     borderRadius: 9,
-    backgroundColor: C.blue,
+    backgroundColor: C.purple,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 8,
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
 
   // Next step
   nextStepBox: {
-    backgroundColor: C.blue,
+    backgroundColor: C.purple,
     borderRadius: 6,
     padding: 16,
     marginBottom: 20,
@@ -176,12 +180,12 @@ const styles = StyleSheet.create({
   nextStepText: { fontSize: 11, color: C.white, fontWeight: "bold", lineHeight: 1.6 },
 
   // CTA
-  ctaTitle: { fontSize: 18, fontWeight: "bold", color: C.blueDark, marginBottom: 8 },
+  ctaTitle: { fontSize: 18, fontWeight: "bold", color: C.purpleDark, marginBottom: 8 },
   ctaText: { fontSize: 10, color: C.darkText, lineHeight: 1.6, marginBottom: 16 },
-  ctaBox: { backgroundColor: C.blue, borderRadius: 6, padding: 18, marginBottom: 16 },
+  ctaBox: { backgroundColor: C.purple, borderRadius: 6, padding: 18, marginBottom: 16 },
   ctaBoxTitle: { fontSize: 11, fontWeight: "bold", color: C.white, marginBottom: 6 },
   ctaBoxText: { fontSize: 9, color: C.white, lineHeight: 1.8, opacity: 0.95 },
-  website: { fontSize: 13, color: C.blue, fontWeight: "bold", textAlign: "center", marginTop: 6 },
+  website: { fontSize: 13, color: C.purple, fontWeight: "bold", textAlign: "center", marginTop: 6 },
 
   // Disclaimer
   disclaimerBox: {
@@ -216,7 +220,7 @@ function AliyahPlanDocument({ formData, plan }: PdfProps) {
       {/* ─── Page 1: Cover ─────────────────────────────── */}
       <Page size="A4" style={{ padding: 0 }}>
         <View style={styles.coverPage}>
-          <Text style={styles.coverBrand}>OLIM PAVEWAY</Text>
+          <Image src={LOGO_PATH} style={styles.coverLogo} />
           <Text style={styles.coverTitle}>Your Personal{"\n"}Aliyah Action Plan</Text>
           <Text style={styles.coverSubtitle}>
             {`Prepared exclusively for ${formData.firstName} · ${formData.country} → ${formData.targetArea}`}
