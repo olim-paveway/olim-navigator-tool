@@ -1,3 +1,6 @@
 allowBuilds:
   esbuild: true
   unrs-resolver: true
+minimumReleaseAgeExclude:
+  - '@vercel/functions@3.6.3'
+  - '@vercel/oidc@3.6.1'
