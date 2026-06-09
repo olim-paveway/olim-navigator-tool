@@ -77,13 +77,18 @@ async function runGenerationPipeline(
   const { sendPlanEmail } = await import("@/lib/email/send");
   const { enrollInFluentCRM } = await import("@/lib/crm/enroll");
 
+  console.log(`[Pipeline:${leadId}] Starting`);
+
   await db
     .update(leads)
     .set({ status: "generating", updatedAt: new Date() })
     .where(eq(leads.id, leadId));
 
+  console.log(`[Pipeline:${leadId}] Generating AI plan…`);
   const aiPlan = await generateAliyahPlan(data);
+  console.log(`[Pipeline:${leadId}] AI plan done. readiness=${aiPlan.readiness_score}`);
 
+  console.log(`[Pipeline:${leadId}] Generating PDF…`);
   const pdfBuffer = await generateAliyahPdf(
     {
       firstName: data.firstName,
@@ -94,19 +99,30 @@ async function runGenerationPipeline(
     },
     aiPlan
   );
+  console.log(`[Pipeline:${leadId}] PDF done. size=${pdfBuffer.length}`);
 
+  console.log(`[Pipeline:${leadId}] Uploading to Blob…`);
   const pdfUrl = await uploadPdfToBlob(pdfBuffer, leadId);
+  console.log(`[Pipeline:${leadId}] Blob upload done. url=${pdfUrl}`);
 
-  await sendPlanEmail({
-    to: data.email,
-    firstName: data.firstName,
-    readinessScore: aiPlan.readiness_score,
-    targetArea: data.targetArea,
-    pdfUrl,
-    pdfBuffer,
-  });
+  // Email is non-fatal — PDF is already in Blob; success screen shows the link
+  try {
+    console.log(`[Pipeline:${leadId}] Sending email to ${data.email}…`);
+    await sendPlanEmail({
+      to: data.email,
+      firstName: data.firstName,
+      readinessScore: aiPlan.readiness_score,
+      targetArea: data.targetArea,
+      pdfUrl,
+      pdfBuffer,
+    });
+    console.log(`[Pipeline:${leadId}] Email sent OK`);
+  } catch (emailErr) {
+    // Log the error but do NOT fail the pipeline — user still gets the PDF via the success screen
+    console.error(`[Pipeline:${leadId}] Email failed (non-fatal):`, emailErr);
+  }
 
-  // Enroll in FluentCRM — non-fatal if it fails
+  // Enroll in FluentCRM — non-fatal
   await enrollInFluentCRM({
     email: data.email,
     firstName: data.firstName,
@@ -129,4 +145,6 @@ async function runGenerationPipeline(
       updatedAt: new Date(),
     })
     .where(eq(leads.id, leadId));
+
+  console.log(`[Pipeline:${leadId}] Completed successfully`);
 }
