@@ -11,14 +11,19 @@ export function SuccessScreen({ pdfUrl, score, firstName }: Props) {
         <span className="text-4xl text-white">✓</span>
       </div>
       <h2 className="text-2xl font-bold text-gray-900 mb-2">
-        Your plan is on its way, {firstName}!
+        Thank you for using the Olim Navigator Tool!
       </h2>
-      <p className="text-gray-500 mb-8">
-        Check your inbox — your personalised aliyah PDF is being delivered now.
+      <p className="text-gray-600 mb-1">
+        Your personalised aliyah plan is ready, {firstName}.
+      </p>
+      <p className="text-gray-400 text-sm mb-8">
+        Check your email inbox — and your{" "}
+        <strong className="text-gray-500">spam folder</strong> if you
+        don&apos;t see it right away.
       </p>
 
       <div className="bg-olive/10 border border-olive/20 rounded-xl p-6 mb-8 inline-block">
-        <p className="text-sm text-olive/80 mb-1 uppercase tracking-widest text-xs">
+        <p className="text-olive/80 mb-1 uppercase tracking-widest text-xs">
           Your Readiness Score
         </p>
         <p className="text-6xl font-bold text-olive">{score}</p>
@@ -32,7 +37,7 @@ export function SuccessScreen({ pdfUrl, score, firstName }: Props) {
           rel="noopener noreferrer"
           className="bg-olive text-white px-6 py-3 rounded-lg font-semibold hover:bg-olive-dark transition-colors"
         >
-          View Your Plan
+          View Your Plan Now
         </a>
         <a
           href="https://www.olimpaveway.com/consultation"

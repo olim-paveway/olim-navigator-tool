@@ -12,6 +12,9 @@ const MESSAGES = [
   "Almost ready...",
 ];
 
+// After this many seconds, show the thank-you screen regardless of status
+const TIMEOUT_SECONDS = 90;
+
 type Props = {
   leadId: string;
   onComplete: (pdfUrl: string, score: number) => void;
@@ -20,6 +23,7 @@ type Props = {
 
 export function LoadingScreen({ leadId, onComplete, onError }: Props) {
   const [msgIndex, setMsgIndex] = useState(0);
+  const [timedOut, setTimedOut] = useState(false);
 
   useEffect(() => {
     const msgInterval = setInterval(() => {
@@ -45,11 +49,23 @@ export function LoadingScreen({ leadId, onComplete, onError }: Props) {
       }
     }, 2000);
 
+    // Safety valve — show thank-you after TIMEOUT_SECONDS even if pipeline is still running
+    const timeoutId = setTimeout(() => {
+      clearInterval(pollInterval);
+      clearInterval(msgInterval);
+      setTimedOut(true);
+    }, TIMEOUT_SECONDS * 1000);
+
     return () => {
       clearInterval(msgInterval);
       clearInterval(pollInterval);
+      clearTimeout(timeoutId);
     };
   }, [leadId, onComplete, onError]);
+
+  if (timedOut) {
+    return <ThankYouScreen />;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -67,8 +83,46 @@ export function LoadingScreen({ leadId, onComplete, onError }: Props) {
         </motion.p>
       </AnimatePresence>
       <p className="text-gray-400 text-sm mt-4">
-        This usually takes about 15 seconds
+        This usually takes about 30 seconds
       </p>
+
+      {/* Reassurance while they wait */}
+      <div className="mt-10 max-w-sm bg-olive/5 border border-olive/20 rounded-xl p-5 text-left">
+        <p className="text-olive font-semibold text-sm mb-1">Almost there!</p>
+        <p className="text-gray-500 text-sm leading-relaxed">
+          Your personalised aliyah plan is being prepared. Once ready, it will
+          land straight in your inbox — check your spam folder if you
+          don&apos;t see it within a few minutes.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function ThankYouScreen() {
+  return (
+    <div className="flex flex-col items-center justify-center py-10 text-center">
+      <div className="w-20 h-20 bg-olive/10 border-2 border-olive/30 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span className="text-4xl">✉️</span>
+      </div>
+
+      <h2 className="text-2xl font-bold text-gray-900 mb-3">
+        Thank you for using the Olim Navigator Tool!
+      </h2>
+      <p className="text-gray-500 text-base leading-relaxed max-w-sm mb-2">
+        Your personalised aliyah plan is on its way to your inbox.
+      </p>
+      <p className="text-gray-400 text-sm leading-relaxed max-w-sm mb-8">
+        Don&apos;t see it? Check your <strong>spam or junk folder</strong> —
+        some email providers filter it the first time.
+      </p>
+
+      <a
+        href="https://www.olimpaveway.com/consultation"
+        className="bg-olive text-white px-6 py-3 rounded-lg font-semibold hover:bg-olive-dark transition-colors text-sm"
+      >
+        Book a Free Consultation →
+      </a>
     </div>
   );
 }

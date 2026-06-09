@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { waitUntil } from "@vercel/functions";
 import { formSchema } from "@/lib/validations/form";
 import { db } from "@/lib/db";
 import { leads } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export const runtime = "nodejs";
-export const maxDuration = 60;
+export const maxDuration = 300;
 
 export async function POST(req: NextRequest) {
   let leadId: string | undefined;
@@ -46,16 +47,18 @@ export async function POST(req: NextRequest) {
 
     leadId = lead.id;
 
-    // Fire-and-forget pipeline — client polls /api/status/[id]
-    runGenerationPipeline(leadId, data).catch(async (err) => {
-      console.error("[Pipeline] Fatal error:", err);
-      if (leadId) {
-        await db
-          .update(leads)
-          .set({ status: "failed", errorMessage: String(err), updatedAt: new Date() })
-          .where(eq(leads.id, leadId));
-      }
-    });
+    // Use waitUntil so Vercel keeps the function alive until the pipeline finishes
+    waitUntil(
+      runGenerationPipeline(leadId, data).catch(async (err) => {
+        console.error("[Pipeline] Fatal error:", err);
+        if (leadId) {
+          await db
+            .update(leads)
+            .set({ status: "failed", errorMessage: String(err), updatedAt: new Date() })
+            .where(eq(leads.id, leadId));
+        }
+      })
+    );
 
     return NextResponse.json({ leadId }, { status: 202 });
   } catch (err) {

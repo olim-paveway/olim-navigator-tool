@@ -64,7 +64,16 @@ export function AliyahForm() {
     }
   }, [formData]);
 
-  if (formState === "loading" && leadId) {
+  if (formState === "loading") {
+    if (!leadId) {
+      // POST is still in flight — show a minimal spinner until we have a leadId
+      return (
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <div className="w-16 h-16 border-4 border-olive border-t-transparent rounded-full animate-spin mb-6" />
+          <p className="text-gray-500 text-sm">Submitting your answers…</p>
+        </div>
+      );
+    }
     return (
       <LoadingScreen
         leadId={leadId}
