@@ -64,8 +64,15 @@ export default function HomePage() {
           <AliyahForm />
         </div>
         <p className="text-center text-white/40 text-xs mt-5 px-4">
-          By submitting you consent to receive your plan by email.
-          Olim Paveway respects your privacy.
+          By submitting you consent to receive your plan by email.{" "}
+          <a
+            href="https://www.olimpaveway.com/privacy-policy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-white/60 transition-colors"
+          >
+            Privacy Policy
+          </a>
         </p>
       </section>
     </main>
