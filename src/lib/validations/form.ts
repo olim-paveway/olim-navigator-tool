@@ -6,7 +6,6 @@ export const countrySchema = z.enum([
   "Canada",
   "Australia",
   "South Africa",
-  "France",
   "Other",
 ]);
 

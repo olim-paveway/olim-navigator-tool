@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# generated sample PDF (regenerate with: pnpm sample-pdf)
+scripts/sample-report.pdf

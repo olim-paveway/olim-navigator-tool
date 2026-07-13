@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FormData } from "@/types";
+import { PRIVACY_POLICY_URL } from "@/lib/config";
 
 type Props = {
   data: Partial<FormData>;
@@ -103,7 +104,7 @@ export function Step8Contact({ data, onUpdate, onSubmit }: Props) {
               helpful resources from Olim Paveway. I can unsubscribe at any
               time.{" "}
               <a
-                href="https://www.olimpaveway.com/privacy"
+                href={PRIVACY_POLICY_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-olive underline"

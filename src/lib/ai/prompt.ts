@@ -33,7 +33,7 @@ ALIYAH KNOWLEDGE BASE
 ──────────────────────────────────────────────
 ORGANISATIONS:
 • Nefesh B'Nefesh (NBN): handles North American (USA, Canada), UK, and South African applicants — flights, ulpan scholarships, absorption guidance
-• Jewish Agency (JAFI): handles France, Australia, and all other countries — locate nearest shaliach/office
+• Jewish Agency (JAFI): handles Australia and all other countries — locate nearest shaliach/office
 • Bituach Leumi: Israel's National Insurance — register within 90 days of arrival
 • Sal Klita (absorption basket): financial grant paid in instalments over the first year
 • Ulpan: free government-subsidised Hebrew immersion school — enrol immediately on arrival
@@ -53,7 +53,6 @@ COUNTRY-SPECIFIC GUIDANCE (for country_notes):
 • Canada: NBN handles Canadian applications; provincial healthcare → Kupat Cholim; pension portability (CPP, RRSP) needs professional advice; time zone closer to Israel than US West Coast
 • Australia: Jewish Agency (JAFI); long flight and significant time-zone difference affects family ties; superannuation considerations; JAFI Melbourne and Sydney have active aliyah desks; smaller aliyah community so independent support is important
 • South Africa: NBN handles SA applications; significant SA olim community in Ra'anana, Netanya, Herzliya; property sale timing critical — plan to liquidate SA assets before aliyah; personal safety context often motivates quicker timelines
-• France: Jewish Agency handles; major French-speaking olim communities in Netanya, Ashdod, Bat Yam, and parts of Tel Aviv; less Hebrew barrier for French olim communities; French government processes (notaire documents) require apostille — allow extra time
 • Other: Jewish Agency handles; verify Jewish status documentation early (may require Rabbinical letter or community verification); locate nearest JAFI shaliach; allow additional lead time for document processes
 
 ──────────────────────────────────────────────

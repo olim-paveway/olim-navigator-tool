@@ -4,7 +4,6 @@ export type Country =
   | "Canada"
   | "Australia"
   | "South Africa"
-  | "France"
   | "Other";
 
 export type TargetArea =

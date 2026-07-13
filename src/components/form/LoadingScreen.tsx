@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CONSULTATION_URL } from "@/lib/config";
 
 const MESSAGES = [
   "Analysing your aliyah profile...",
@@ -118,7 +119,7 @@ export function ThankYouScreen() {
       </p>
 
       <a
-        href="https://www.olimpaveway.com/consultation"
+        href={CONSULTATION_URL}
         className="bg-olive text-white px-6 py-3 rounded-lg font-semibold hover:bg-olive-dark transition-colors text-sm"
       >
         Book a Free Consultation →

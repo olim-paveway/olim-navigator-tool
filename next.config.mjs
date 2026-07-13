@@ -2,10 +2,11 @@
 const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@react-pdf/renderer"],
-    // Include public/images in the serverless function bundle so
-    // @react-pdf/renderer can read logo + images via the filesystem on Vercel
+    // Include only the file the PDF generator reads from the filesystem
+    // (@react-pdf/renderer on Vercel); a broad glob would drag every public
+    // image into the /api/submit function bundle
     outputFileTracingIncludes: {
-      "/api/submit": ["./public/images/**"],
+      "/api/submit": ["./public/images/paveway-logo-transparent.png"],
     },
   },
 };

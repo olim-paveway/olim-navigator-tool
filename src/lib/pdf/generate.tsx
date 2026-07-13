@@ -11,6 +11,7 @@ import {
 } from "@react-pdf/renderer";
 import type { AiPlanSchema } from "@/lib/validations/form";
 import type { FormSchema } from "@/lib/validations/form";
+import { MAIN_SITE_DISPLAY } from "@/lib/config";
 
 const LOGO_PATH = path.join(process.cwd(), "public/images/paveway-logo-transparent.png");
 
@@ -252,7 +253,7 @@ function AliyahPlanDocument({ formData, plan }: PdfProps) {
 
           <View style={styles.coverFooter}>
             <Text style={styles.coverFooterText}>
-              {`This plan was generated exclusively for ${formData.firstName}. © ${new Date().getFullYear()} Olim Paveway · www.olimpaveway.com`}
+              {`This plan was generated exclusively for ${formData.firstName}. © ${new Date().getFullYear()} Olim Paveway · ${MAIN_SITE_DISPLAY}`}
             </Text>
           </View>
         </View>
@@ -359,7 +360,7 @@ function AliyahPlanDocument({ formData, plan }: PdfProps) {
             {"✓ Aliyah application preparation and submission\n✓ Pre-aliyah pilot trip coordination\n✓ Housing search and lease review\n✓ Bank account opening assistance\n✓ School enrolment for children\n✓ Employment and business setup guidance\n✓ 12-month post-arrival support"}
           </Text>
         </View>
-        <Text style={styles.website}>www.olimpaveway.com</Text>
+        <Text style={styles.website}>{MAIN_SITE_DISPLAY}</Text>
 
         {/* Disclaimer */}
         <View style={styles.disclaimerBox}>

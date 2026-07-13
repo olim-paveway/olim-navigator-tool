@@ -1,3 +1,5 @@
+import { CONSULTATION_URL } from "@/lib/config";
+
 type Props = {
   pdfUrl: string;
   score: number;
@@ -40,7 +42,7 @@ export function SuccessScreen({ pdfUrl, score, firstName }: Props) {
           View Your Plan Now
         </a>
         <a
-          href="https://www.olimpaveway.com/consultation"
+          href={CONSULTATION_URL}
           className="border-2 border-olive text-olive px-6 py-3 rounded-lg font-semibold hover:bg-olive/5 transition-colors"
         >
           Book a Free Consultation

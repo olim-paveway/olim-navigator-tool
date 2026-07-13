@@ -9,7 +9,6 @@ const OPTIONS: { value: Country; icon: string }[] = [
   { value: "Canada", icon: "🇨🇦" },
   { value: "Australia", icon: "🇦🇺" },
   { value: "South Africa", icon: "🇿🇦" },
-  { value: "France", icon: "🇫🇷" },
   { value: "Other", icon: "🌍" },
 ];
 

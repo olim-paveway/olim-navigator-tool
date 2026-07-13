@@ -1,3 +1,5 @@
+import { CONSULTATION_URL, MAIN_SITE_DISPLAY } from "@/lib/config";
+
 type DeliveryEmailProps = {
   firstName: string;
   readinessScore: number;
@@ -71,7 +73,7 @@ export function buildDeliveryEmailHtml({
           <!-- CTA -->
           <tr>
             <td style="padding:0 40px 32px;">
-              <a href="https://www.olimpaveway.com/consultation"
+              <a href="${CONSULTATION_URL}"
                  style="display:inline-block;background-color:#352f6e;color:#ffffff;padding:14px 32px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold;font-family:Arial,sans-serif;">
                 Book Your Free Consultation
               </a>
@@ -82,7 +84,7 @@ export function buildDeliveryEmailHtml({
           <tr>
             <td style="background-color:#F8F4E8;padding:24px 40px;border-top:1px solid #e5e7eb;">
               <p style="margin:0;font-size:11px;color:#9CA3AF;font-family:Arial,sans-serif;">
-                &copy; ${year} Olim Paveway &middot; www.olimpaveway.com<br>
+                &copy; ${year} Olim Paveway &middot; ${MAIN_SITE_DISPLAY}<br>
                 You received this because you requested an aliyah plan.
                 To unsubscribe, reply with &ldquo;unsubscribe&rdquo;.
               </p>
