@@ -23,6 +23,11 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
+    const utm = {
+      utmSource: (body.utmSource as string) ?? null,
+      utmMedium: (body.utmMedium as string) ?? null,
+      utmCampaign: (body.utmCampaign as string) ?? null,
+    };
 
     // Insert lead in "pending" state and return leadId immediately
     const [lead] = await db
@@ -39,9 +44,9 @@ export async function POST(req: NextRequest) {
         spouseCareer: data.spouseCareer,
         concerns: data.concerns,
         status: "pending",
-        utmSource: (body.utmSource as string) ?? null,
-        utmMedium: (body.utmMedium as string) ?? null,
-        utmCampaign: (body.utmCampaign as string) ?? null,
+        utmSource: utm.utmSource,
+        utmMedium: utm.utmMedium,
+        utmCampaign: utm.utmCampaign,
       })
       .returning({ id: leads.id });
 
@@ -49,7 +54,7 @@ export async function POST(req: NextRequest) {
 
     // Use waitUntil so Vercel keeps the function alive until the pipeline finishes
     waitUntil(
-      runGenerationPipeline(leadId, data).catch(async (err) => {
+      runGenerationPipeline(leadId, data, utm).catch(async (err) => {
         console.error("[Pipeline] Fatal error:", err);
         if (leadId) {
           await db
@@ -67,14 +72,21 @@ export async function POST(req: NextRequest) {
   }
 }
 
+type Utm = {
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+};
+
 async function runGenerationPipeline(
   leadId: string,
-  data: import("@/lib/validations/form").FormSchema
+  data: import("@/lib/validations/form").FormSchema,
+  utm: Utm
 ) {
   const { generateAliyahPlan } = await import("@/lib/ai/generate");
   const { generateAliyahPdf } = await import("@/lib/pdf/generate");
   const { uploadPdfToBlob } = await import("@/lib/pdf/upload");
-  const { sendPlanEmail } = await import("@/lib/email/send");
+  const { sendPlanEmail, sendInternalLeadNotification } = await import("@/lib/email/send");
   const { enrollInFluentCRM } = await import("@/lib/crm/enroll");
 
   console.log(`[Pipeline:${leadId}] Starting`);
@@ -83,6 +95,27 @@ async function runGenerationPipeline(
     .update(leads)
     .set({ status: "generating", updatedAt: new Date() })
     .where(eq(leads.id, leadId));
+
+  // Internal team notification — fires as soon as the user registers,
+  // independent of whether AI/PDF generation later succeeds. Non-fatal.
+  try {
+    await sendInternalLeadNotification({
+      leadId,
+      firstName: data.firstName,
+      email: data.email,
+      country: data.country,
+      targetArea: data.targetArea,
+      timeline: data.timeline,
+      familyType: data.familyType,
+      career: data.career,
+      spouseCareer: data.spouseCareer,
+      concerns: data.concerns,
+      ...utm,
+    });
+    console.log(`[Pipeline:${leadId}] Internal notification sent`);
+  } catch (notifyErr) {
+    console.error(`[Pipeline:${leadId}] Internal notification failed (non-fatal):`, notifyErr);
+  }
 
   console.log(`[Pipeline:${leadId}] Generating AI plan…`);
   const aiPlan = await generateAliyahPlan(data);
@@ -106,6 +139,7 @@ async function runGenerationPipeline(
   console.log(`[Pipeline:${leadId}] Blob upload done. url=${pdfUrl}`);
 
   // Email is non-fatal — PDF is already in Blob; success screen shows the link
+  let reportSentAt: Date | null = null;
   try {
     console.log(`[Pipeline:${leadId}] Sending email to ${data.email}…`);
     await sendPlanEmail({
@@ -116,9 +150,11 @@ async function runGenerationPipeline(
       pdfUrl,
       pdfBuffer,
     });
+    reportSentAt = new Date();
     console.log(`[Pipeline:${leadId}] Email sent OK`);
   } catch (emailErr) {
     // Log the error but do NOT fail the pipeline — user still gets the PDF via the success screen
+    // reportSentAt stays null, so the follow-up cron will skip this lead
     console.error(`[Pipeline:${leadId}] Email failed (non-fatal):`, emailErr);
   }
 
@@ -142,6 +178,7 @@ async function runGenerationPipeline(
       readinessScore: aiPlan.readiness_score,
       aiPlan,
       pdfUrl,
+      reportSentAt,
       updatedAt: new Date(),
     })
     .where(eq(leads.id, leadId));

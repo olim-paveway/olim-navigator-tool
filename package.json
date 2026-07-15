@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "sample-pdf": "tsx scripts/generate-sample-pdf.ts",
+    "db:push": "drizzle-kit push",
     "images:generate": "node /Users/chaimapsan/Documents/vetbid/scripts/generate-article-images.mjs --project olim-paveway"
   },
   "dependencies": {

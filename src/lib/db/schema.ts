@@ -68,6 +68,9 @@ export const leads = pgTable("leads", {
   utmSource: text("utm_source"),
   utmMedium: text("utm_medium"),
   utmCampaign: text("utm_campaign"),
+  // Email lifecycle
+  reportSentAt: timestamp("report_sent_at"),
+  followUpSentAt: timestamp("follow_up_sent_at"),
   // Timestamps
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),

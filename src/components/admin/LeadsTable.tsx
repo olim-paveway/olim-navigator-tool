@@ -21,7 +21,7 @@ type Lead = {
   createdAt: string;
 };
 
-const COUNTRIES = ["USA", "UK", "Canada", "Australia", "South Africa", "France", "Other"];
+const COUNTRIES = ["USA", "UK", "Canada", "Australia", "South Africa", "Other"];
 const STATUSES = ["pending", "generating", "completed", "failed"];
 
 export function LeadsTable() {
