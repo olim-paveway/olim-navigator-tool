@@ -2,7 +2,7 @@ import { MailerSend, EmailParams, Sender, Recipient, Attachment } from "mailerse
 import { buildDeliveryEmailHtml } from "./templates/delivery";
 import { buildInternalNotificationEmailHtml } from "./templates/internal-notification";
 import { buildFollowUpEmailHtml } from "./templates/followup";
-import { INTERNAL_LEAD_NOTIFICATION_EMAIL } from "@/lib/config";
+import { INTERNAL_LEAD_NOTIFICATION_EMAILS } from "@/lib/config";
 
 const mailerSend = new MailerSend({
   apiKey: process.env.MAILERSEND_API_KEY!,
@@ -72,7 +72,7 @@ export async function sendInternalLeadNotification(
 
   const emailParams = new EmailParams()
     .setFrom(defaultSender())
-    .setTo([new Recipient(INTERNAL_LEAD_NOTIFICATION_EMAIL)])
+    .setTo(INTERNAL_LEAD_NOTIFICATION_EMAILS.map((email) => new Recipient(email)))
     .setSubject(`New Navigator registration: ${args.firstName} (${args.country})`)
     .setHtml(html);
 
