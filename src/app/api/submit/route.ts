@@ -156,22 +156,9 @@ async function runGenerationPipeline(
   } catch (emailErr) {
     // Log the error but do NOT fail the pipeline — user still gets the PDF via the success screen
     // reportSentAt stays null, so the follow-up cron will skip this lead
-    //
-    // The mailersend SDK throws a plain { statusCode, body, headers } object
-    // (not an Error) on API error responses — extract it explicitly, since
-    // `String(err)` on that shape just yields "[object Object]".
-    if (
-      emailErr &&
-      typeof emailErr === "object" &&
-      "statusCode" in emailErr
-    ) {
-      const e = emailErr as { statusCode?: number; body?: unknown };
-      emailErrorMessage = `EMAIL: HTTP ${e.statusCode} — ${JSON.stringify(e.body).slice(0, 500)}`;
-    } else if (emailErr instanceof Error) {
-      emailErrorMessage = `EMAIL: ${emailErr.message}`;
-    } else {
-      emailErrorMessage = `EMAIL: ${JSON.stringify(emailErr).slice(0, 500)}`;
-    }
+    emailErrorMessage = `EMAIL: ${
+      emailErr instanceof Error ? emailErr.message : String(emailErr)
+    }`.slice(0, 500);
     console.error(`[Pipeline:${leadId}] Email failed (non-fatal):`, emailErr);
   }
 
@@ -197,7 +184,7 @@ async function runGenerationPipeline(
       pdfUrl,
       reportSentAt,
       // Status stays "completed" (user still got the PDF) — this is purely
-      // diagnostic so the real MailerSend failure reason is visible without
+      // diagnostic so the real email-send failure reason is visible without
       // needing Vercel log access.
       errorMessage: emailErrorMessage,
       updatedAt: new Date(),
