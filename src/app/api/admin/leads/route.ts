@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
       id: true,
       firstName: true,
       email: true,
+      phone: true,
       country: true,
       targetArea: true,
       timeline: true,

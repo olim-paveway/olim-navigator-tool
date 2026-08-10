@@ -86,6 +86,20 @@ export function Step8Contact({ data, onUpdate, onSubmit }: Props) {
           )}
         </div>
 
+        {/* Phone (optional) */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Phone Number <span className="text-gray-400 font-normal">(optional)</span>
+          </label>
+          <input
+            type="tel"
+            value={data.phone ?? ""}
+            onChange={(e) => onUpdate({ phone: e.target.value })}
+            placeholder="+1 555 123 4567"
+            className="w-full px-4 py-3 rounded-lg border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-olive/40"
+          />
+        </div>
+
         {/* GDPR */}
         <div>
           <label className="flex items-start gap-3 cursor-pointer">

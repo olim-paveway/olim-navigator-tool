@@ -61,6 +61,7 @@ export type FormData = {
   concerns: Concern[];
   firstName: string;
   email: string;
+  phone?: string;
   gdprConsent: boolean;
 };
 

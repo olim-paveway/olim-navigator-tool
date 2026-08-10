@@ -35,6 +35,7 @@ export async function POST(req: NextRequest) {
       .values({
         firstName: data.firstName,
         email: data.email,
+        phone: data.phone || null,
         gdprConsent: data.gdprConsent ? "true" : "false",
         country: data.country,
         targetArea: data.targetArea,
@@ -103,6 +104,7 @@ async function runGenerationPipeline(
       leadId,
       firstName: data.firstName,
       email: data.email,
+      phone: data.phone || null,
       country: data.country,
       targetArea: data.targetArea,
       timeline: data.timeline,

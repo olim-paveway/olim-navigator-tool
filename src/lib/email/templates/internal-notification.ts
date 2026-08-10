@@ -4,6 +4,7 @@ type InternalNotificationProps = {
   leadId: string;
   firstName: string;
   email: string;
+  phone: string | null;
   country: string;
   targetArea: string;
   timeline: string;
@@ -27,6 +28,7 @@ export function buildInternalNotificationEmailHtml({
   leadId,
   firstName,
   email,
+  phone,
   country,
   targetArea,
   timeline,
@@ -59,6 +61,7 @@ export function buildInternalNotificationEmailHtml({
               <table cellpadding="0" cellspacing="0" style="width:100%;">
                 ${row("Name", firstName)}
                 ${row("Email", `<a href="mailto:${email}" style="color:#352f6e;">${email}</a>`)}
+                ${row("Phone", phone ? `<a href="tel:${phone}" style="color:#352f6e;">${phone}</a>` : "—")}
                 ${row("Country", country)}
                 ${row("Target area", targetArea)}
                 ${row("Timeline", timeline)}

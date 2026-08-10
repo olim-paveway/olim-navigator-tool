@@ -6,6 +6,7 @@ type Lead = {
   id: string;
   firstName: string;
   email: string;
+  phone: string | null;
   country: string;
   targetArea: string;
   timeline: string;
@@ -50,12 +51,12 @@ export function LeadsTable() {
 
   const exportCsv = () => {
     const headers = [
-      "ID", "Name", "Email", "Country", "Target Area",
+      "ID", "Name", "Email", "Phone", "Country", "Target Area",
       "Timeline", "Family", "Career", "Score", "Status",
       "UTM Source", "UTM Medium", "UTM Campaign", "Created",
     ];
     const rows = leads.map((l) => [
-      l.id, l.firstName, l.email, l.country, l.targetArea,
+      l.id, l.firstName, l.email, l.phone ?? "", l.country, l.targetArea,
       l.timeline, l.familyType, l.career,
       l.readinessScore ?? "", l.status,
       l.utmSource ?? "", l.utmMedium ?? "", l.utmCampaign ?? "",
@@ -129,7 +130,7 @@ export function LeadsTable() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-100">
-              {["Name", "Email", "Country", "Area", "Timeline", "Score", "Status", "Date", "PDF"].map(
+              {["Name", "Email", "Phone", "Country", "Area", "Timeline", "Score", "Status", "Date", "PDF"].map(
                 (h) => (
                   <th
                     key={h}
@@ -144,13 +145,13 @@ export function LeadsTable() {
           <tbody className="divide-y divide-gray-50">
             {loading ? (
               <tr>
-                <td colSpan={9} className="px-4 py-10 text-center text-gray-400">
+                <td colSpan={10} className="px-4 py-10 text-center text-gray-400">
                   Loading...
                 </td>
               </tr>
             ) : leads.length === 0 ? (
               <tr>
-                <td colSpan={9} className="px-4 py-10 text-center text-gray-400">
+                <td colSpan={10} className="px-4 py-10 text-center text-gray-400">
                   No leads yet.
                 </td>
               </tr>
@@ -161,6 +162,7 @@ export function LeadsTable() {
                     {lead.firstName}
                   </td>
                   <td className="px-4 py-3 text-gray-500">{lead.email}</td>
+                  <td className="px-4 py-3 text-gray-500">{lead.phone ?? "—"}</td>
                   <td className="px-4 py-3 text-gray-700">{lead.country}</td>
                   <td className="px-4 py-3 text-gray-700">{lead.targetArea}</td>
                   <td className="px-4 py-3 text-gray-700">{lead.timeline}</td>

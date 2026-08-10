@@ -70,6 +70,7 @@ export const formSchema = z.object({
   concerns: z.array(concernSchema).min(1, "Select at least one concern"),
   firstName: z.string().min(1, "First name is required").max(100),
   email: z.string().email("Valid email required"),
+  phone: z.string().max(30).optional(),
   gdprConsent: z.literal(true, { message: "Consent is required" }),
 });
 

@@ -48,6 +48,7 @@ export const leads = pgTable("leads", {
   // Contact
   firstName: text("first_name").notNull(),
   email: text("email").notNull(),
+  phone: text("phone"),
   gdprConsent: text("gdpr_consent").notNull().default("true"),
   // Form answers
   country: text("country").notNull(),

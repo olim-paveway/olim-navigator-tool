@@ -51,6 +51,9 @@ export async function sendPlanEmail({
   const { error } = await getResend().emails.send({
     from: defaultFrom(),
     to,
+    // Every plan report also goes to the internal team, blind so the
+    // recipient's copy doesn't show them in the header.
+    bcc: INTERNAL_LEAD_NOTIFICATION_EMAILS,
     subject: `${firstName}, your personal aliyah plan is ready`,
     html,
     attachments: [
@@ -68,6 +71,7 @@ type SendInternalLeadNotificationArgs = {
   leadId: string;
   firstName: string;
   email: string;
+  phone: string | null;
   country: string;
   targetArea: string;
   timeline: string;
