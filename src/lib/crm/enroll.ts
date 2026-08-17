@@ -1,6 +1,7 @@
 type EnrollArgs = {
   email: string;
   firstName: string;
+  phone: string | null;
   country: string;
   targetArea: string;
   timeline: string;
@@ -35,6 +36,7 @@ export async function enrollInFluentCRM(data: EnrollArgs): Promise<void> {
       body: JSON.stringify({
         email: data.email,
         first_name: data.firstName,
+        ...(data.phone ? { phone: data.phone } : {}),
         status: "subscribed",
         tags: [
           `country:${data.country}`,

@@ -168,6 +168,7 @@ async function runGenerationPipeline(
   await enrollInFluentCRM({
     email: data.email,
     firstName: data.firstName,
+    phone: data.phone || null,
     country: data.country,
     targetArea: data.targetArea,
     timeline: data.timeline,
