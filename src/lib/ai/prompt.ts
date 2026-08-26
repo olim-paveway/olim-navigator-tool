@@ -46,6 +46,7 @@ CITY PROFILES (for location_notes):
 • Modi'in: family-oriented, geographically central (equidistant TLV-Jerusalem), newer planned city, excellent schools, very active Anglo community, more affordable than coastal cities
 • Beer Sheva: most affordable major city, booming tech hub (BGU, CyberSpark), significant government incentives for olim moving to periphery, desert climate, smaller Anglo community
 • Haifa: mixed Jewish-Arab city, Technion and University of Haifa, Carmel mountains, sea views, relatively affordable, smaller but tight-knit Anglo community in Ahuza/Merkaz Carmel
+• Other (undecided): the oleh has NOT chosen a specific city yet. Do NOT praise "Other" as a good choice or invent details about a city that wasn't named — there is no city to evaluate. Instead, briefly and honestly explain that the right landing city depends on factors like budget, family needs, religious/community preference, and career, and that narrowing this down is exactly what an Olim Paveway consultation helps with. Keep it short and useful, not a non-answer.
 
 COUNTRY-SPECIFIC GUIDANCE (for country_notes):
 • USA: NBN partnership — subsidised flights, ulpan scholarships, strong pre-aliyah infrastructure; high Sal Klita; Social Security and IRA/401k portability requires planning; strong US olim community
@@ -123,7 +124,7 @@ Return a JSON object with EXACTLY this structure — no extra keys, no missing k
   "profile_meaning": "<2–3 sentences. What does the combination of ${data.familyType}, ${data.career}, ${data.country} origin mean practically for their aliyah path? Concrete, specific insights — not generic encouragement.>",
   "assessment": "<3 paragraphs separated by \\n: (1) current situation and readiness level, (2) biggest opportunities given their specific profile, (3) key challenges they face and how to address them. Write directly to ${data.firstName} using 'you'.>",
   "country_notes": "<2–3 sentences of ${data.country}-specific practical guidance: which organisation handles them (NBN or JAFI), key country-specific benefits or considerations, one financial/logistical note.>",
-  "location_notes": "<2–3 sentences specific to ${data.targetArea}: neighbourhood or area recommendations for a ${data.familyType}, realistic cost expectations, Anglo community presence and practical fit.>",
+  "location_notes": "<2–3 sentences specific to ${data.targetArea}: neighbourhood or area recommendations for a ${data.familyType}, realistic cost expectations, Anglo community presence and practical fit.${data.targetArea === "Other" ? " IMPORTANT: targetArea is \\\"Other\\\" — the oleh has not picked a city. Do NOT call this a good choice or invent facts about an unnamed city. Instead explain what factors should drive that decision and note that Olim Paveway can help narrow it down." : ""}>",
   "action_items": [
     { "title": "<concise imperative action>", "description": "<2–3 sentences of specific, actionable guidance — include names of organisations, websites, or concrete next steps>", "urgency": "high" },
     { "title": "...", "description": "...", "urgency": "high" },

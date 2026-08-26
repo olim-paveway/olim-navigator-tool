@@ -6,6 +6,7 @@ type InternalNotificationProps = {
   email: string;
   phone: string | null;
   country: string;
+  state: string | null;
   targetArea: string;
   timeline: string;
   familyType: string;
@@ -30,6 +31,7 @@ export function buildInternalNotificationEmailHtml({
   email,
   phone,
   country,
+  state,
   targetArea,
   timeline,
   familyType,
@@ -62,7 +64,7 @@ export function buildInternalNotificationEmailHtml({
                 ${row("Name", firstName)}
                 ${row("Email", `<a href="mailto:${email}" style="color:#352f6e;">${email}</a>`)}
                 ${row("Phone", phone ? `<a href="tel:${phone}" style="color:#352f6e;">${phone}</a>` : "—")}
-                ${row("Country", country)}
+                ${row("Country", state ? `${country} (${state})` : country)}
                 ${row("Target area", targetArea)}
                 ${row("Timeline", timeline)}
                 ${row("Family type", familyType)}

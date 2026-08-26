@@ -53,6 +53,7 @@ export type Concern =
 
 export type FormData = {
   country: Country;
+  state?: string; // US state — only collected when country === "USA"
   targetArea: TargetArea;
   timeline: Timeline;
   familyType: FamilyType;

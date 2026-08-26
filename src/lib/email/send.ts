@@ -73,6 +73,7 @@ type SendInternalLeadNotificationArgs = {
   email: string;
   phone: string | null;
   country: string;
+  state: string | null;
   targetArea: string;
   timeline: string;
   familyType: string;

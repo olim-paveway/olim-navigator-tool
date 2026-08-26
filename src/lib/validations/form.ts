@@ -1,4 +1,7 @@
 import { z } from "zod";
+import { US_STATES } from "@/lib/us-states";
+
+export const usStateSchema = z.enum(US_STATES);
 
 export const countrySchema = z.enum([
   "USA",
@@ -60,19 +63,25 @@ export const concernSchema = z.enum([
   "Community",
 ]);
 
-export const formSchema = z.object({
-  country: countrySchema,
-  targetArea: targetAreaSchema,
-  timeline: timelineSchema,
-  familyType: familyTypeSchema,
-  career: careerSchema,
-  spouseCareer: spouseCareerSchema,
-  concerns: z.array(concernSchema).min(1, "Select at least one concern"),
-  firstName: z.string().min(1, "First name is required").max(100),
-  email: z.string().email("Valid email required"),
-  phone: z.string().max(30).optional(),
-  gdprConsent: z.literal(true, { message: "Consent is required" }),
-});
+export const formSchema = z
+  .object({
+    country: countrySchema,
+    state: usStateSchema.optional(), // required when country === "USA"
+    targetArea: targetAreaSchema,
+    timeline: timelineSchema,
+    familyType: familyTypeSchema,
+    career: careerSchema,
+    spouseCareer: spouseCareerSchema,
+    concerns: z.array(concernSchema).min(1, "Select at least one concern"),
+    firstName: z.string().min(1, "First name is required").max(100),
+    email: z.string().email("Valid email required"),
+    phone: z.string().max(30).optional(),
+    gdprConsent: z.literal(true, { message: "Consent is required" }),
+  })
+  .refine((data) => data.country !== "USA" || !!data.state, {
+    message: "State is required for USA",
+    path: ["state"],
+  });
 
 export type FormSchema = z.infer<typeof formSchema>;
 

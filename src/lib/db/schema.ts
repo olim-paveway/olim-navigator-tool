@@ -52,6 +52,7 @@ export const leads = pgTable("leads", {
   gdprConsent: text("gdpr_consent").notNull().default("true"),
   // Form answers
   country: text("country").notNull(),
+  state: text("state"), // US state — only set when country === "USA"
   targetArea: text("target_area").notNull(),
   timeline: text("timeline").notNull(),
   familyType: text("family_type").notNull(),

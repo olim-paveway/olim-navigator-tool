@@ -8,6 +8,7 @@ type Lead = {
   email: string;
   phone: string | null;
   country: string;
+  state: string | null;
   targetArea: string;
   timeline: string;
   familyType: string;
@@ -51,12 +52,12 @@ export function LeadsTable() {
 
   const exportCsv = () => {
     const headers = [
-      "ID", "Name", "Email", "Phone", "Country", "Target Area",
+      "ID", "Name", "Email", "Phone", "Country", "State", "Target Area",
       "Timeline", "Family", "Career", "Score", "Status",
       "UTM Source", "UTM Medium", "UTM Campaign", "Created",
     ];
     const rows = leads.map((l) => [
-      l.id, l.firstName, l.email, l.phone ?? "", l.country, l.targetArea,
+      l.id, l.firstName, l.email, l.phone ?? "", l.country, l.state ?? "", l.targetArea,
       l.timeline, l.familyType, l.career,
       l.readinessScore ?? "", l.status,
       l.utmSource ?? "", l.utmMedium ?? "", l.utmCampaign ?? "",
@@ -163,7 +164,12 @@ export function LeadsTable() {
                   </td>
                   <td className="px-4 py-3 text-gray-500">{lead.email}</td>
                   <td className="px-4 py-3 text-gray-500">{lead.phone ?? "—"}</td>
-                  <td className="px-4 py-3 text-gray-700">{lead.country}</td>
+                  <td className="px-4 py-3 text-gray-700">
+                    {lead.country}
+                    {lead.state && (
+                      <span className="text-gray-400"> ({lead.state})</span>
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-gray-700">{lead.targetArea}</td>
                   <td className="px-4 py-3 text-gray-700">{lead.timeline}</td>
                   <td className="px-4 py-3 font-bold text-olive">

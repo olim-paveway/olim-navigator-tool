@@ -38,6 +38,7 @@ export async function GET(req: NextRequest) {
       email: true,
       phone: true,
       country: true,
+      state: true,
       targetArea: true,
       timeline: true,
       familyType: true,
